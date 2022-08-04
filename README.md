@@ -22,7 +22,7 @@ Scenarios:
 ● All Users use the same login form.
 
 ● Administrator can view, create, modify and delete Projects, Tasks and Users.
-○ If Administrator is creating Project, he must select Project Manager to manage the project.
+* If Administrator is creating Project, he must select Project Manager to manage the project.
 Project managers are Users with Role Project Manager.
 
 ● Administrator can assign / unassign a Task to a User.
@@ -32,16 +32,16 @@ Project managers are Users with Role Project Manager.
 ● Developers cannot have more than 3 tasks assigned
 
 ● User can modify Task only if it is assigned to him / her.
-○ User with Developer role is allowed to change: status, progress, description
-○ User with Project Manager role is allowed to change: assignee, status, progress, deadline,
+* User with Developer role is allowed to change: status, progress, description
+* User with Project Manager role is allowed to change: assignee, status, progress, deadline,
 description.
 
 ● User can view list of tasks that are assigned to him / her.
-○ If a task deadline is less than 5 days away it should be marked somehow on task
+* If a task deadline is less than 5 days away it should be marked somehow on task
 overview.
 
 ● Project manager can view a list of projects and their details like:
-○ Project progress is based on progress of all project tasks. (e.g. project with three tasks
+* Project progress is based on progress of all project tasks. (e.g. project with three tasks
 with progress 0%, 50% and 100% has progress 50%)
-○ Task summary - total number of tasks and number of tasks in each status
-○ Number of tasks that are overdue, or are going to be in 2 days (Deadline < Current time+ 2 days)
+* Task summary - total number of tasks and number of tasks in each status
+* Number of tasks that are overdue, or are going to be in 2 days (Deadline < Current time+ 2 days)

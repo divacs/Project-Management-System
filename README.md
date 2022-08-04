@@ -44,5 +44,4 @@ overview.
 ○ Project progress is based on progress of all project tasks. (e.g. project with three tasks
 with progress 0%, 50% and 100% has progress 50%)
 ○ Task summary - total number of tasks and number of tasks in each status
-○ Number of tasks that are overdue, or are going to be in 2 days (Deadline < Current time
-+ 2 days)
+○ Number of tasks that are overdue, or are going to be in 2 days (Deadline < Current time+ 2 days)

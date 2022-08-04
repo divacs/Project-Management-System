@@ -1,6 +1,7 @@
 # ProjectManagerSystem
 
 Requirements:
+
 • Projects are used to organize tasks into logical units. Required attributes are: project name and project code
 (unique).
 • Tasks are used as a child of Project. One Task can belong to one Project, and one project can have many

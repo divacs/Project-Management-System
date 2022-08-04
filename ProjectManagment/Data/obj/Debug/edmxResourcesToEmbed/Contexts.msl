@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GetDatabaseModelStoreContainer" CdmEntityContainer="GetDatabaseEntities">
+    <EntitySetMapping Name="Projects">
+      <EntityTypeMapping TypeName="GetDatabaseModel.Project">
+        <MappingFragment StoreEntitySet="Projects">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Assignee" ColumnName="Assignee" />
+          <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
+          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="GetDatabaseModel.Role">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="GetDatabaseModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="IDRole" ColumnName="IDRole" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tasks">
+      <EntityTypeMapping TypeName="GetDatabaseModel.Task">
+        <MappingFragment StoreEntitySet="Tasks">
+          <ScalarProperty Name="IDProject" ColumnName="IDProject" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Deadline" ColumnName="Deadline" />
+          <ScalarProperty Name="Progress" ColumnName="Progress" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Assignee" ColumnName="Assignee" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

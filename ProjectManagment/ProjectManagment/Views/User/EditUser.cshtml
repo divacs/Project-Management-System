@@ -1,0 +1,61 @@
+﻿@model GetCompany.Models.CreateUserModel
+@{
+    ViewBag.Title = "EditUser"; 
+}
+  
+<div class="container">
+    <div class="card">
+        <div class="card-header text-secondary">
+            <span>Edit user</span>
+            @Html.ActionLink("Cancel", "UserHome", "User", null, new { @class = "btn btn-outline-info float-right" })
+        </div>
+        <div class="card-body mx-auto">
+            @using (Html.BeginForm("EditUser", "User", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.HiddenFor(x=>x.Active)
+                <div class="form-group row"> 
+                    <label class="col-form-label text-primary"><small>Name:</small></label>
+                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control mb-2", placeholder = "Name:" })
+                    @Html.ValidationMessageFor(x => x.Name, "", new { @class = "errorMessage" }) 
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label text-primary"><small>Surname:</small></label>
+                    @Html.TextBoxFor(x => x.Surname, new { @class = "form-control mb-2", placeholder = "Surname:" })
+                    @Html.ValidationMessageFor(x => x.Surname, "", new { @class = "errorMessage" })
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label text-primary"><small>Username:</small></label>
+                    @Html.HiddenFor(x => x.UserName)
+                    @Html.TextBoxFor(x => x.UserName, new { @class = "form-control mb-2", placeholder = "Username:", disabled = true })
+                    @Html.ValidationMessageFor(x => x.UserName, "", new { @class = "errorMessage" })
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label text-primary"><small>e-mail:</small></label>
+                    @Html.TextBoxFor(x => x.Email, new { @class = "form-control mb-2", placeholder = "e-mail:", type = "email" })
+                    @Html.ValidationMessageFor(x => x.Email, "", new { @class = "errorMessage" })
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label text-primary"><small>Password:</small></label>
+                    @Html.TextBoxFor(x => x.Password, new { @class = "form-control mb-2", placeholder = "Password:", type = "password" })
+                    @Html.ValidationMessageFor(x => x.Password, "", new { @class = "errorMessage" })
+                    <div><input type="checkbox" onclick="visiblePassword()">Show Password</div>
+                </div>
+                <div class="form-group row"> 
+                    @Html.DropDownListFor(x => x.IDRole, Model.Roles.Select(x => new SelectListItem() { Text = x.Name, Value = x.ID.ToString(), Selected = Model.IDRole == x.ID ? true : false }), "All roles")
+                    @Html.ValidationMessageFor(x => x.IDRole, "", new { @class = "errorMessage" })
+                </div>
+                <div class="form-group row">
+                    <div> 
+                        <button type="submit" class="btn btn-outline-success">Save</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+            <script>
+                $(document).ready(function () {
+                    visiblePassword();
+                })
+            </script>
+

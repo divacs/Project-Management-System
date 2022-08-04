@@ -1,0 +1,91 @@
+﻿@model GetCompany.Models.TaskModel
+@{
+    ViewBag.Title = "EditTask";
+
+    var getProject = Model.Projects.FirstOrDefault(x => x.ProjectCode == Model.IDProject).ProjectName;
+    var currentAssignee = Model.Assignee;
+}
+
+<div class="container">
+    <div class="card">
+        <div class="card-header text-secondary">
+            <span>Edit Task</span>
+            @Html.ActionLink("Cancel", "TaskHome", "Task", null, new { @class = "btn btn-outline-info float-right" })
+        </div>
+        <div class="card-body mx-auto">
+            @using (Html.BeginForm("EditTask", "Task", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.HiddenFor(x => x.ID) 
+
+                <div class="form-group row">
+                    <label class="col-form-label text-primary"><small>Description:</small></label>
+                    @Html.TextBoxFor(x => x.Description, new { @class = "form-control", placeholder = "Description:" })
+                    @Html.ValidationMessageFor(x => x.Description, "", new { @class = "errorMessage" })
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-form-label text-primary"><small>Project name:</small></label>
+                    @Html.HiddenFor(x => x.IDProject)
+                    @Html.TextBox("projectName", getProject, new { @class = "form-control", @disabled = true })
+                    @Html.ValidationMessageFor(x => x.IDProject, "", new { @class = "errorMessage" })
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-form-label text-primary"><small>Assignee:</small></label>
+                    </div>
+                    <div class="row">
+                        @if (!User.IsInRole("Developer"))
+                        {
+                            @Html.DropDownListFor(x => x.Assignee, Model.Users.Select(x => new SelectListItem() { Text = x.Name + " " + x.Surname, Value = x.UserName.ToString(), Selected = currentAssignee == x.UserName ? true : false }), "All developers", new { @value = currentAssignee, @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Assignee, "", new { @class = "errorMessage" })
+                        }
+                        else
+                        {
+                            @Html.HiddenFor(x=>x.Assignee)
+                            @Html.TextBoxFor(x => x.Assignee, new { disabled = true, @class = "form-control" })
+                        }
+                    </div> 
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-form-label text-primary"><small>Deadline:</small></label>
+                    </div>
+                    <div class="row">
+                        @if (User.IsInRole("Developer")) //dev can't change deadline
+                        {
+                            @Html.HiddenFor(x => x.Deadline)
+                            @Html.TextBoxFor(x => x.Deadline, new { disabled = true, @class = "form-control" })
+                        }
+                        else
+                        {
+                            @Html.EditorFor(m => m.Deadline)
+                        }
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-form-label text-primary"><small>Progress:</small></label>
+                    </div>
+                    <div class="row">
+                        @Html.TextBoxFor(m => m.Progress, new { @type = "number", @class = "form-control", min = "0", max = "100" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-form-label text-primary"><small>Status:</small></label>
+                    </div>
+                    <div class="row">
+                        @Html.DropDownListFor(x => x.Status, Model.Statuses.Select(x => new SelectListItem() { Text = x, Value = x.ToString(), Selected = Model.Status == x ? true : false }), "All statuses", new { @value = Model.Status, @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Status, "", new { @class = "errorMessage" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div>
+
+                        <button type="submit" class="btn btn-outline-success">Save</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>   

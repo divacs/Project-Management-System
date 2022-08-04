@@ -1,0 +1,24 @@
+﻿@model GetCompany.Models.UserModel
+@{
+    ViewBag.Title = "Login"; 
+}
+@using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="mb-3">
+        @Html.TextBoxFor(x => x.UserName, new { @class = "form-control", placeholder = "User name:" })
+    </div>
+    <div class="mb-3">
+        @Html.TextBoxFor(x => x.Password, new { @class = "form-control", placeholder = "Password:", type = "password" })
+        <div><input type="checkbox" onclick="visiblePassword()">Show Password</div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="errorMessage">
+        @Html.ValidationSummary()
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        visiblePassword();
+    })
+</script>
+

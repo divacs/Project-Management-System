@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GetDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Project">
+    <Key>
+      <PropertyRef Name="ProjectCode" />
+    </Key>
+    <Property Name="ProjectCode" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Assignee" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="User" Relationship="GetDatabaseModel.FK__Projects__Assign__3C69FB99" FromRole="Project" ToRole="User" />
+    <NavigationProperty Name="Tasks" Relationship="GetDatabaseModel.FK__Tasks__IDProject__33D4B598" FromRole="Project" ToRole="Task" />
+    <Property Name="Active" Nullable="false" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="GetDatabaseModel.FK__Users__IDRole__34C8D9D1" FromRole="Role" ToRole="User" />
+  </EntityType>
+  <EntityContainer Name="GetDatabaseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Projects" EntityType="Self.Project" />
+    <EntitySet Name="Roles" EntityType="Self.Role" />
+    <EntitySet Name="Users" EntityType="GetDatabaseModel.User" />
+    <AssociationSet Name="FK__Users__IDRole__34C8D9D1" Association="GetDatabaseModel.FK__Users__IDRole__34C8D9D1">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Projects__Assign__3C69FB99" Association="GetDatabaseModel.FK__Projects__Assign__3C69FB99">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Project" EntitySet="Projects" />
+    </AssociationSet>
+    <EntitySet Name="Tasks" EntityType="GetDatabaseModel.Task" />
+    <AssociationSet Name="FK__Tasks__IDProject__33D4B598" Association="GetDatabaseModel.FK__Tasks__IDProject__33D4B598">
+      <End Role="Project" EntitySet="Projects" />
+      <End Role="Task" EntitySet="Tasks" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Tasks__Assignee__35BCFE0A" Association="GetDatabaseModel.FK__Tasks__Assignee__35BCFE0A">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Task" EntitySet="Tasks" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserName" />
+    </Key>
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Surname" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="IDRole" Type="Int32" Nullable="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Role" Relationship="GetDatabaseModel.FK__Users__IDRole__34C8D9D1" FromRole="User" ToRole="Role" />
+    <NavigationProperty Name="Projects" Relationship="GetDatabaseModel.FK__Projects__Assign__3C69FB99" FromRole="User" ToRole="Project" />
+    <NavigationProperty Name="Tasks" Relationship="GetDatabaseModel.FK__Tasks__Assignee__35BCFE0A" FromRole="User" ToRole="Task" />
+    <Property Name="Active" Nullable="false" Type="Boolean" />
+  </EntityType>
+  <Association Name="FK__Users__IDRole__34C8D9D1">
+    <End Type="GetDatabaseModel.Role" Role="Role" Multiplicity="1" />
+    <End Type="GetDatabaseModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="IDRole" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Projects__Assign__3C69FB99">
+    <End Type="GetDatabaseModel.User" Role="User" Multiplicity="1" />
+    <End Type="GetDatabaseModel.Project" Role="Project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserName" />
+      </Principal>
+      <Dependent Role="Project">
+        <PropertyRef Name="Assignee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Task">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Assignee" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Progress" Type="Int32" Nullable="false" />
+    <Property Name="Deadline" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IDProject" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Project" Relationship="GetDatabaseModel.FK__Tasks__IDProject__33D4B598" FromRole="Task" ToRole="Project" />
+    <NavigationProperty Name="User" Relationship="GetDatabaseModel.FK__Tasks__Assignee__35BCFE0A" FromRole="Task" ToRole="User" />
+  </EntityType>
+  <Association Name="FK__Tasks__IDProject__33D4B598">
+    <End Type="GetDatabaseModel.Project" Role="Project" Multiplicity="1" />
+    <End Type="GetDatabaseModel.Task" Role="Task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectCode" />
+      </Principal>
+      <Dependent Role="Task">
+        <PropertyRef Name="IDProject" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Tasks__Assignee__35BCFE0A">
+    <End Type="GetDatabaseModel.User" Role="User" Multiplicity="1" />
+    <End Type="GetDatabaseModel.Task" Role="Task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserName" />
+      </Principal>
+      <Dependent Role="Task">
+        <PropertyRef Name="Assignee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

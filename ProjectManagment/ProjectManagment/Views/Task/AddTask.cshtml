@@ -1,0 +1,82 @@
+﻿@model GetCompany.Models.TaskCreateModel
+@{
+    ViewBag.Title = "AddTask"; 
+}
+
+<div class="container">
+    <div class="card">
+        <div class="card-header text-secondary">
+            <span>Add Task</span>
+            @Html.ActionLink("Cancel", "TaskHome", "Task", null, new { @class = "btn btn-outline-info  float-right" })
+        </div>
+
+
+
+        <div class="card-body mx-auto">
+            <div id="messageName"></div>
+            <div id="messageAssignee"></div>
+            @using (Html.BeginForm("AddTask", "Task", FormMethod.Post, new { @class = "form-horizontal",@onsubmit= "AddTask()" }))
+            { 
+                <div class="form">
+                    <div class="form-group">
+                        <label class="col-form-label text-primary"><small>Description:</small></label>
+                        <div class="form-group">
+                            @Html.TextBoxFor(x => x.Description, new { @class = "form-control", placeholder = "Description:" })
+                        </div>
+                        <div class="form-group">
+                            @Html.ValidationMessageFor(x => x.Description, "", new { @class = "errorMessage" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label text-primary"><small>Project name:</small></label>
+                        <div class="form-group">
+                            @Html.DropDownListFor(x => x.IDProject, Model.Projects.Select(x => new SelectListItem() { Text = x.ProjectName, Value = x.ProjectCode.ToString() }), "All projects")
+                        </div>
+                        <div class="form-group">
+                            @Html.ValidationMessageFor(x => x.IDProject, "", new { @class = "errorMessage" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label text-primary"><small>Assignee:</small></label>
+                        <div class=" form-group">
+                            @Html.DropDownListFor(x => x.Assignee, Model.Users.Select(x => new SelectListItem() { Text = x.Name + " " + x.Surname, Value = x.UserName.ToString() }), "All developers")
+                        </div>
+                        <div class=" form-group">
+                            @Html.ValidationMessageFor(x => x.Assignee, "", new { @class = "errorMessage" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label text-primary"><small>Deadline:</small></label>
+                        <div class=" form-group">
+                            @Html.TextBoxFor(x => x.Deadline, new { @class = "control-label", type = "date" })
+                           
+                        </div>
+                        <div class=" form-group">
+                            @Html.ValidationMessageFor(x => x.Deadline, "", new { @class = "errorMessage" })
+                        </div>
+                    </div>
+
+                    @*<div>
+                            <div class="row">
+                                @Html.DropDownListFor(x => x.Assignee, statuses.Select(x => new SelectListItem() { Text = x, Value = x }), "All statuses", new { @class = "mb-2" })
+                            </div>
+                        </div>*@
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+
+                        <button type="submit" class="btn btn-outline-success">Add</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+<script>
+    $(document).ready(function () {
+        AddTask();
+    })
+</script>
+

@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - GET Company</title>
+
+    @Styles.Render("~/Content/bootstrap.css")
+    @Styles.Render("~/Content/Home.css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Scripts/ProjectScript.js") 
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                @if (!HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+                    @Html.ActionLink("LogIn", "Login", "Home", new { area = "" }, new { @class = "navbar-brand" });
+                }
+                else
+                {
+                    if (User.IsInRole("Administrator"))
+                    {
+                        @Html.ActionLink("Users", "UserHome", "User", new { area = "" }, new { @class = "navbar-brand" });
+                    }
+                    if (User.IsInRole("Administrator") || User.IsInRole("Project Manager"))
+                    {
+                        @Html.ActionLink("Projects", "ProjectHome", "Project", new { area = "" }, new { @class = "navbar-brand" });
+                    }
+
+                    @Html.ActionLink("Tasks", "TaskHome", "Task", new { area = "" }, new { @class = "navbar-brand" });
+
+                    <span class="loginText">Logged in as <b> @(User.Identity.Name)</b>   @Html.ActionLink("Sign out", "SignOut", "Home") </span>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="container body-content"> 
+
+        @RenderBody()
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

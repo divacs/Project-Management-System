@@ -1,0 +1,56 @@
+﻿@model List<GetCompany.Models.TaskModel>
+<div class="container">
+    <div class="card">
+        <div class="card-header text-secondary">
+            <span>List of tasks</span>
+            @if (!User.IsInRole("Developer"))
+            {
+                <a class="btn btn-outline-success float-right btn-sm" href="@Url.Action("AddTask","Task")">Add new task</a>
+            }
+        </div>
+        <div class="card-body">
+            <table class="table table_font_size">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Project Name</th>
+                        <th scope="col">Manager</th>
+                        <th scope="col">Assignee</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Progress</th>
+                        <th scope="col">Deadline</th>
+                        <th scope="col">Desccription</th>
+                        <th scope="col" class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.OrderBy(x=>x.IDProject))
+                    {
+                        <tr class="@(item.Deadline>DateTime.Now && item.Deadline<=DateTime.Now.AddDays(5)?"RedItem":"")">
+                            <td scope="row"></td>
+                            <th>@item.Project.ProjectName</th>
+                            <th>@item.Project.Assignee</th>
+                            <th>@item.Assignee</th>
+                            <td>@item.Status</td>
+                            <td>@item.Progress%</td>
+                            <td>@item.Deadline.ToString("dd.MM.yyyy")</td>
+                            <td>@item.Description</td>
+
+                            <td class="text-right">
+                                @Html.ActionLink("Edit", "EditTask", "Task", new { id = item.ID }, new { @class = "btn btn-outline-info btn-sm" })
+                                @if (User.IsInRole("Administrator") || User.IsInRole("Project Manager"))
+                                {
+                                    @Html.ActionLink("Delete", "DeleteTask", "Task", new { id = item.ID }, new { @class = "btn btn-outline-danger btn-sm" })
+                                }
+                            </td>
+
+
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

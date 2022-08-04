@@ -1,0 +1,21 @@
+﻿.errorMessage {
+    color:red; 
+}
+li {
+    list-style-type: none;
+}
+.loginText {
+    position: absolute;
+    float: right;
+    font-size: 12px;
+    right: 253px;
+}
+.table_font_size {
+    font-size:12px;
+}
+.RedItem {
+    background-color: #f9cfcf;
+}
+tr:hover {
+    background-color: #e2e2e2;
+}

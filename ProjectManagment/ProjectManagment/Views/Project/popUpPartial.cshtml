@@ -1,0 +1,60 @@
+﻿@model int 
+    @{ 
+        Dictionary<string, int> data = (Dictionary<string,int>)TempData["numOfTaskPerStatus"];
+    }
+<div class="modal fade" id="exampleModal_@(Model)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@TempData["ProjectName"]</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body float-left">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th></th>
+                            <th>Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Number of tasks</td>
+                            <td></td>
+                            <td><b>@TempData["numOfTask"]</b></td>
+                        </tr>
+                        @foreach (var item in (Dictionary<string, int>)TempData["numOfTaskPerStatus"])
+                        {
+                            <tr>
+                                <td><b>"@item.Key"</b> tasks</td>
+                                <td></td>
+                                <td><b>@item.Value</b></td>
+                            </tr>
+                        } 
+                        <tr>
+                            <td>Overdue tasks</td>
+                            <td></td>
+                            <td><b>@TempData["numOverdueTask"]</b></td>
+                        </tr>
+                        <tr>
+                            <td>Tasks that expire in two days</td>
+                            <td></td>
+                            <td><b>@TempData["numExpireTask"]</b></td>
+                        </tr>
+                        <tr>
+                            <td>Progress of tasks</td>
+                            <td></td>
+                            <td><b>@TempData["AvgProgress"]%</b></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

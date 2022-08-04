@@ -1,0 +1,52 @@
+﻿@model List<GetCompany.Models.CreateUserModel>
+@{
+    ViewBag.Title = "UserHome";
+     
+}
+ 
+<div class="container">
+    <div class="card">
+        <div class="card-header text-secondary">
+            <span>List of users</span>
+            <a class="btn btn-outline-success float-right btn-sm" href="@Url.Action("AddUser","User")">Add new user</a>
+        </div>
+        <div class="card-body">     
+            <table class="table table_font_size">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col">Roles</th>
+                        <th scope="col" class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {//administrator cant delete hisself
+                        <tr>
+                            <th scope="row"></th>
+                            <td>@(item.Name + " "+item.Surname)</td>
+                            <td>@item.UserName</td>
+                            <td>@item.Email</td>
+                            <td>@(item.GetRole(item.IDRole).Name)</td>
+                            <td class="text-right">
+                                @Html.ActionLink("Edit", "EditUser", "User", new { username = item.UserName }, new { @class = "btn btn-outline-info btn-sm" })
+                                
+                                @Html.ActionLink("Delete", "DeleteUser", "User", new { username = item.UserName }, new { @class =(item.Role!=null? (item.Role.Name.ToLower() == "administrator" ? " disabled" : ""):""  )+ " btn btn-outline-danger btn-sm " })
+
+                            </td>
+                        </tr>
+                    }
+
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+

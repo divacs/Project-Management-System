@@ -1,0 +1,60 @@
+﻿@model List<GetCompany.Models.ProjectModel>
+@{
+    ViewBag.Title = "ProjectHome";
+}
+
+
+<div class="container">
+    <div class="card">
+        <div class="card-header text-secondary">
+            <span>List of projects</span>
+            <a class="btn btn-outline-success float-right btn-sm" href="@Url.Action("AddProject", "Project")">Add new project</a>
+        </div>
+        <div class="card-body">
+            <table class="table table_font_size">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Code</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Project manager</th>
+                        <th scope="col" class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.OrderBy(x=>x.Name))
+                    {
+                        <tr>
+                            <th scope="row"></th>
+                            <td>@(item.ProjectCode)</td>
+                            <th>@item.Name</th>
+                            <td>@(item.User.Name + " " + item.User.Surname)</td>
+
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                <td class="text-right">
+                                    @Html.ActionLink("Edit", "EditProject", "Project", new { projectCode = item.ProjectCode }, new { @class = "btn btn-outline-info btn-sm" })
+
+                                    @Html.ActionLink("Delete", "DeleteProject", "Project", new { projectCode = item.ProjectCode }, new { @class = "btn btn-outline-danger btn-sm" })
+
+                                </td>
+                            }
+                            @if (User.IsInRole("Project Manager"))
+                            {
+                                <td class="text-right">
+                                    @Html.ActionLink("Details", "popUpPartial", "Project",null, new { @class = "btn btn-outline-info btn-sm", @data_toggle = "modal", @data_target = "#exampleModal_"+item.ProjectCode })
+                                    @{Html.RenderAction("popUpPartial", "Project", new { @id = item.ProjectCode });}
+                                </td>
+                            }
+
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div> 
+
+
+
